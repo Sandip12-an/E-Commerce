@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LUXE SHOP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0d0b;
+      --surface: #161512;
+      --card: #1c1a16;
+      --gold: #c9a84c;
+      --gold-light: #e8cc7e;
+      --text: #f0ebe0;
+      --muted: #8a836e;
+      --border: rgba(201,168,76,0.15);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(14,13,11,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-actions { display: flex; gap: 1.2rem; align-items: center; }
+    .cart-btn {
+      background: var(--gold);
+      color: #0e0d0b;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .cart-btn:hover { background: var(--gold-light); }
+    .cart-count {
+      background: #8a3a3a;
+      color: #fff;
+      border-radius: 50%;
+      width: 18px; height: 18px;
+      font-size: 0.65rem;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      margin-left: 4px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero p {
+      color: var(--muted);
+      max-width: 400px;
+      margin: 0 auto 2.5rem;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.5rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    /* ─── TICKER ─── */
+    .ticker {
+      background: var(--gold);
+      color: var(--bg);
+      padding: 0.6rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── PRODUCTS ─── */
+    section { padding: 6rem 3rem; }
+    .section-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 400;
+    }
+    .section-header a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.4s ease, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+
+    .product-img {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--gold);
+      color: var(--bg);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      font-weight: 500;
+    }
+    .product-info { padding: 1.2rem; }
+    .product-category {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .product-price {
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .price { font-size: 1rem; color: var(--text); }
+    .price-old {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+    .add-btn {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.65rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .add-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+    /* ─── BANNER ─── */
+    .banner {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+    .banner-text {
+      padding: 5rem 3rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .banner-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .banner-text p { color: var(--muted); margin-bottom: 2rem; max-width: 340px; }
+    .banner-img {
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8rem;
+      border-left: 1px solid var(--border);
+    }
+
+    /* ─── FEATURES ─── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .feature {
+      padding: 3rem 2rem;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .feature:last-child { border-right: none; }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .feature h4 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+    .feature p { color: var(--muted); font-size: 0.82rem; }
+
+    /* ─── NEWSLETTER ─── */
+    .newsletter {
+      text-align: center;
+      padding: 6rem 3rem;
+    }
+    .newsletter h2 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      margin-bottom: 0.8rem;
+    }
+    .newsletter p { color: var(--muted); margin-bottom: 2rem; }
+    .email-form {
+      display: flex;
+      max-width: 440px;
+      margin: 0 auto;
+      gap: 0;
+    }
+    .email-form input {
+      flex: 1;
+      padding: 0.85rem 1.2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-right: none;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .email-form input::placeholder { color: var(--muted); }
+    .email-form button {
+      padding: 0.85rem 1.5rem;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .email-form button:hover { background: var(--gold-light); }
+
+    /* ─── CART SIDEBAR ─── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+    .cart-sidebar {
+      position: fixed; top: 0; right: -420px; width: 420px; height: 100%;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      z-index: 201;
+      transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column;
+    }
+    .cart-sidebar.open { right: 0; }
+    .cart-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .cart-header h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+    .close-cart {
+      background: none; border: none;
+      color: var(--muted); font-size: 1.5rem; cursor: pointer;
+    }
+    .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+    .cart-item {
+      display: flex; gap: 1rem; margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item-img {
+      width: 70px; height: 90px;
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; flex-shrink: 0;
+    }
+    .cart-item-info { flex: 1; }
+    .cart-item-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .cart-item-price { color: var(--gold); font-size: 0.9rem; }
+    .remove-item {
+      background: none; border: none;
+      color: var(--muted); cursor: pointer; font-size: 0.9rem;
+      margin-top: 0.5rem; padding: 0;
+    }
+    .remove-item:hover { color: #e07070; }
+    .cart-empty { color: var(--muted); text-align: center; padding: 3rem 0; }
+    .cart-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .cart-total {
+      display: flex; justify-content: space-between;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .checkout-btn:hover { background: var(--gold-light); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 4rem 3rem 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand .logo { display: block; margin-bottom: 1rem; }
+    .footer-brand p { color: var(--muted); font-size: 0.85rem; max-width: 220px; }
+    .footer-col h5 {
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 0.6rem; }
+    .footer-col ul a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s;
+    }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-bottom p { color: var(--muted); font-size: 0.78rem; }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--gold);
+      color: var(--bg);
+      padding: 0.7rem 1.8rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      z-index: 300;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .banner { grid-template-columns: 1fr; }
+      .banner-img { display: none; }
+      .features { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .cart-sidebar { width: 100%; right: -100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">LUXE</span>
+  <ul class="nav-links">
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="cart-btn" onclick="toggleCart()">
+      Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">New Collection — Spring 2026</p>
+    <h1>Wear the <em>Extraordinary</em><br/>Every Day</h1>
+    <p>Curated luxury essentials designed for those who demand refinement without compromise.</p>
+    <a href="#products" class="btn-primary">Explore Collection</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    Free Shipping on Orders Over $200 &nbsp;·&nbsp; New Arrivals Every Friday &nbsp;·&nbsp; Handcrafted In Italy &nbsp;·&nbsp; 30-Day Returns &nbsp;·&nbsp; Exclusive Members Sale &nbsp;·&nbsp;
+    Free Shipping on Orders Over $200 &nbsp;·&nbsp; New Arrivals Every Friday &nbsp;·&nbsp; Handcrafted In Italy &nbsp;·&nbsp; 30-Day Returns &nbsp;·&nbsp; Exclusive Members Sale &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-header">
+    <h2>Featured Products</h2>
+    <a href="#">View All →</a>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- BANNER -->
+<div class="banner" id="collections">
+  <div class="banner-text">
+    <h2>The Summer<br/><em style="font-style:italic; color:var(--gold)">Capsule</em><br/>Collection</h2>
+    <p>Timeless silhouettes crafted from the finest natural materials. Each piece tells a story of heritage and modernity.</p>
+    <a href="#products" class="btn-primary">Shop Now</a>
+  </div>
+  <div class="banner-img">🧥</div>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature">
+    <div class="feature-icon">🚚</div>
+    <h4>Free Delivery</h4>
+    <p>Complimentary worldwide shipping on orders over $200</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">♻️</div>
+    <h4>Easy Returns</h4>
+    <p>Hassle-free 30-day return policy, no questions asked</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">🔒</div>
+    <h4>Secure Payment</h4>
+    <p>256-bit SSL encrypted checkout, always safe</p>
+  </div>
+  <div class="feature">
+    <div class="feature-icon">💎</div>
+    <h4>Authenticity</h4>
+    <p>Every item verified and certified for quality</p>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>Join the Inner Circle</h2>
+  <p>Early access, exclusive drops, and curated style notes — delivered to your inbox.</p>
+  <div class="email-form">
+    <input type="email" placeholder="Your email address" id="emailInput"/>
+    <button onclick="subscribe()">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">LUXE</span>
+      <p>Redefining modern luxury. Every piece thoughtfully crafted for lasting elegance.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Clothing</a></li>
+        <li><a href="#">Accessories</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Help</h5>
+      <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Shipping</a></li>
+        <li><a href="#">Size Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 LUXE. All rights reserved.</p>
+    <p>Privacy Policy · Terms of Service</p>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Your cart is empty.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const products = [
+    { id:1, name:"Cashmere Overcoat", category:"Outerwear", price:498, oldPrice:620, emoji:"🧥", badge:"New" },
+    { id:2, name:"Silk Slip Dress", category:"Dresses", price:285, oldPrice:null, emoji:"👗", badge:null },
+    { id:3, name:"Merino Turtleneck", category:"Knitwear", price:195, oldPrice:240, emoji:"🧶", badge:"Sale" },
+    { id:4, name:"Linen Blazer", category:"Tailoring", price:375, oldPrice:null, emoji:"🤵", badge:"New" },
+    { id:5, name:"Leather Crossbody", category:"Accessories", price:320, oldPrice:null, emoji:"👜", badge:null },
+    { id:6, name:"Cashmere Beanie", category:"Accessories", price:95, oldPrice:120, emoji:"🧢", badge:"Sale" },
+    { id:7, name:"Wide-Leg Trousers", category:"Bottoms", price:225, oldPrice:null, emoji:"👖", badge:"New" },
+    { id:8, name:"Silk Scarf", category:"Accessories", price:145, oldPrice:null, emoji:"🧣", badge:null },
+  ];
+
+  let cart = [];
+
+  function renderProducts() {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+          ${p.emoji}
+        </div>
+        <div class="product-info">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">
+            <span class="price">$${p.price}</span>
+            ${p.oldPrice ? `<span class="price-old">$${p.oldPrice}</span>` : ''}
+          </div>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const existing = cart.find(i => i.id === id);
+    if (existing) { existing.qty++; }
+    else { cart.push({ ...product, qty: 1 }); }
+    updateCart();
+    showToast(`${product.name} added to cart`);
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(i => i.id !== id);
+    updateCart();
+  }
+
+  function updateCart() {
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = `$${total.toFixed(2)}`;
+    const itemsEl = document.getElementById('cartItems');
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+    } else {
+      itemsEl.innerHTML = cart.map(i => `
+        <div class="cart-item">
+          <div class="cart-item-img">${i.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${i.name}</div>
+            <div class="cart-item-price">$${i.price} × ${i.qty}</div>
+            <button class="remove-item" onclick="removeFromCart(${i.id})">Remove</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function toggleCart() {
+    document.getElementById('cartSidebar').classList.toggle('open');
+    document.getElementById('cartOverlay').classList.toggle('open');
+  }
+
+  function checkout() {
+    if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+    showToast('Redirecting to checkout...');
+    setTimeout(() => { cart = []; updateCart(); toggleCart(); }, 1500);
+  }
+
+  function subscribe() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) { showToast('Please enter a valid email'); return; }
+    showToast('Welcome to the Inner Circle!');
+    document.getElementById('emailInput').value = '';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  renderProducts();
+</script>
+</body>
+</html>
